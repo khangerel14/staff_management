@@ -10,14 +10,31 @@ import {
 import EmployeeList from '@/components/employee-list';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { LogOut, Users, Settings, Calendar } from 'lucide-react';
+import { LogOut, Users, Calendar } from 'lucide-react';
+
+interface EmployeeCountResult {
+  employeeCount: number;
+}
+interface LeaveRequestCountResult {
+  leaveRequestCount: number;
+}
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
 
 export default function AdminDashboard() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
-  const { data: employeeCountData } = useQuery(GET_EMPLOYEE_COUNT);
-  const { data: leaveRequestCountData } = useQuery(GET_LEAVE_REQUEST_COUNT);
+  const { data: employeeCountData } =
+    useQuery<EmployeeCountResult>(GET_EMPLOYEE_COUNT);
+  const { data: leaveRequestCountData } = useQuery<LeaveRequestCountResult>(
+    GET_LEAVE_REQUEST_COUNT
+  );
 
   useEffect(() => {
     const userData = localStorage.getItem('user');
@@ -88,7 +105,7 @@ export default function AdminDashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className='text-2xl font-bold'>
-                    {(employeeCountData as any)?.employeeCount || 0}
+                    {employeeCountData?.employeeCount || 0}
                   </div>
                   <p className='text-xs text-muted-foreground'>
                     All team members
@@ -108,7 +125,7 @@ export default function AdminDashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className='text-2xl font-bold'>
-                    {(leaveRequestCountData as any)?.leaveRequestCount || 0}
+                    {leaveRequestCountData?.leaveRequestCount || 0}
                   </div>
                   <p className='text-xs text-muted-foreground'>
                     Total leave requests

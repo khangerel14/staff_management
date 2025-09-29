@@ -193,7 +193,7 @@ export default function EmployeeForm({
               : 'Fill in the employee details below.'}
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
+        <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
           <div className='space-y-2'>
             <Label htmlFor='name'>Name</Label>
             <Input id='name' {...register('name')} placeholder='Full name' />
